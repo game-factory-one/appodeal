@@ -21,7 +21,10 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setAutoCache": setAutoCache(call, result)
         case "cache": cache(call, result)
         case "isReadyForShow": isReadyForShow(call, result)
+        case "canShow": canShow(call, result)
         case "show": show(call, result)
+
+        case "requestIOSTrackingAuthorization": requestIOSTrackingAuthorization(result)
 
         // Consent Manager
         case "fetchConsentInfo": fetchConsentInfo(call, result)
@@ -81,12 +84,21 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(Appodeal.isReadyForShow(with: adType))
     }
 
+    private func canShow(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! Dictionary<String, Any>
+        let adType = getShowStyle(adType: getAdType(adId: args["adType"] as! Int))
+        let placementName = args["placementName"]
+
+        result(Appodeal.canShowAd(adType, forPlacement: placementName))
+    }
+
     private func show(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let adType = getShowStyle(adType: getAdType(adId: args["adType"] as! Int))
-
+        let placementName = args["placementName"]
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        result(Appodeal.showAd(adType, rootViewController: rootViewController))
+
+        result(Appodeal.showAd(adType, forPlacement: placementName, rootViewController: rootViewController))
     }
 
     private func setCallbacks() {

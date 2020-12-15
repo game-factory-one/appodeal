@@ -39,6 +39,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setAutoCache" -> setAutoCache(call, result)
             "cache" -> cache(call, result)
             "isReadyForShow" -> isReadyForShow(call, result)
+            "canShow" -> canShow(activity, call, result)
             "show" -> show(activity, call, result)
 
             // Consent Manager
@@ -113,11 +114,20 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(Appodeal.isLoaded(adType))
     }
 
+    private fun canShow(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        val placementName = args["placementName"]
+
+        result.success(Appodeal.canShow(adType, placementName))
+    }
+
     private fun show(activity: Activity, call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
+        val placementName = args["placementName"]
 
-        result.success(Appodeal.show(activity, adType))
+        result.success(Appodeal.show(activity, adType, placementName))
     }
     // endregion
 
