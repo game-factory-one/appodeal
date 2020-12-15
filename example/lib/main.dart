@@ -132,6 +132,13 @@ class _Body extends StatelessWidget {
               },
             ),
             RaisedButton(
+              child: Text('Can Show Non-Skippable Ad?'),
+              onPressed: () async {
+                var status = await Appodeal.canShow(AdType.NON_SKIPPABLE, placementName: "placement1");
+                print(status);
+              },
+            ),
+            RaisedButton(
               child: Text('Show Non-Skippable Ad'),
               onPressed: () async {
                 var status = await Appodeal.show(AdType.NON_SKIPPABLE);
