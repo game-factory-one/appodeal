@@ -86,18 +86,16 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
 
     private func canShow(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! Dictionary<String, Any>
-        let adType = getShowStyle(adType: getAdType(adId: args["adType"] as! Int))
-        let placementName = args["placementName"]
-
-        result(Appodeal.canShowAd(adType, forPlacement: placementName))
+        let adType = getAdType(adId: args["adType"] as! Int)
+        let placementName = args["placementName"] as? String ?? ""
+        result(Appodeal.canShow(adType, forPlacement: placementName))
     }
 
     private func show(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let adType = getShowStyle(adType: getAdType(adId: args["adType"] as! Int))
-        let placementName = args["placementName"]
+        let placementName = args["placementName"] as? String ?? ""
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-
         result(Appodeal.showAd(adType, forPlacement: placementName, rootViewController: rootViewController))
     }
 
