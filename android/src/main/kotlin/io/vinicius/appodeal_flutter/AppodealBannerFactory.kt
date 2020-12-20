@@ -21,12 +21,18 @@ class AppodealBannerFactory(private val activity: Activity, private val messenge
         : PlatformView, MethodChannel.MethodCallHandler
     {
         private val arguments = args as Map<*, *>
+        private val placementName = arguments["placementName"]
+
         private val bannerView = Appodeal.getBannerView(activity)
         private val channel = MethodChannel(messenger, "plugins.io.vinicius.appodeal/banner_$id")
-        private val placementName = if (arguments.containsKey("placementName")) arguments["placementName"] as String else ""
 
         init {
-            Appodeal.show(activity, Appodeal.BANNER_VIEW, placementName)
+            if (placementName !== null) {
+                Appodeal.show(activity, Appodeal.BANNER_VIEW, placementName as String)
+            } else {
+                Appodeal.show(activity, Appodeal.BANNER_VIEW)
+            }
+
             channel.setMethodCallHandler(this)
         }
 

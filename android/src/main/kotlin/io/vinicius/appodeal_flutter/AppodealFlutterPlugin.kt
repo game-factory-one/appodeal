@@ -117,17 +117,25 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun canShow(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
-        val placementName = if (args.containsKey("placementName") && args["placementName"] != null) args["placementName"] as String else ""
+        val placementName = args["placementName"]
 
-        result.success(Appodeal.canShow(adType, placementName))
+        if (placementName !== null) {
+            result.success(Appodeal.canShow(adType, placementName as String))
+        } else {
+            result.success(Appodeal.canShow(adType))
+        }
     }
 
     private fun show(activity: Activity, call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
-        val placementName = if (args.containsKey("placementName") && args["placementName"] != null) args["placementName"] as String else ""
+        val placementName = args["placementName"]
 
-        result.success(Appodeal.show(activity, adType, placementName))
+        if (placementName !== null) {
+            result.success(Appodeal.show(activity, adType, placementName as String))
+        } else {
+            result.success(Appodeal.show(activity, adType))
+        }
     }
     // endregion
 
