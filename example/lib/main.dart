@@ -105,7 +105,7 @@ class _Body extends StatelessWidget {
             RaisedButton(
               child: Text('Show Interstitial Ad'),
               onPressed: () async {
-                await Appodeal.show(AdType.INTERSTITIAL);
+                await Appodeal.show(AdType.INTERSTITIAL, placementName: "placement-name");
               },
             ),
             RaisedButton(
@@ -119,7 +119,7 @@ class _Body extends StatelessWidget {
             RaisedButton(
               child: Text('Show Reward Ad'),
               onPressed: () async {
-                var status = await Appodeal.show(AdType.REWARD);
+                var status = await Appodeal.show(AdType.REWARD, placementName: 'placement-name');
                 print(status);
               },
             ),
@@ -134,7 +134,7 @@ class _Body extends StatelessWidget {
             RaisedButton(
               child: Text('Can Show Non-Skippable Ad?'),
               onPressed: () async {
-                var status = await Appodeal.canShow(AdType.NON_SKIPPABLE, placementName: "placement1");
+                var status = await Appodeal.canShow(AdType.NON_SKIPPABLE, placementName: "placement-name");
                 print(status);
               },
             ),
@@ -145,7 +145,7 @@ class _Body extends StatelessWidget {
                 print(status);
               },
             ),
-            AppodealBanner()
+            AppodealBanner(placementName: "placement-name"),
           ],
         ),
       ),

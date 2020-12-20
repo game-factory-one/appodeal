@@ -12,7 +12,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         instance.channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
 
         registrar.addMethodCallDelegate(instance, channel: instance.channel!)
-        registrar.register(AppodealBannerFactory(), withId: "plugins.io.vinicius.appodeal/banner")
+        registrar.register(AppodealBannerFactory(instance: instance), withId: "plugins.io.vinicius.appodeal/banner")
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -100,7 +100,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     private func setCallbacks() {
-        Appodeal.setBannerDelegate(self)
         Appodeal.setInterstitialDelegate(self)
         Appodeal.setRewardedVideoDelegate(self)
         Appodeal.setNonSkippableVideoDelegate(self)

@@ -8,7 +8,7 @@
 import Appodeal
 import Foundation
 
-extension SwiftAppodealFlutterPlugin: AppodealBannerDelegate {
+extension SwiftAppodealFlutterPlugin: APDBannerViewDelegate {
     public func bannerDidLoadAdIsPrecache(_: Bool) {
         channel?.invokeMethod("onBannerLoaded", arguments: nil)
     }
@@ -26,6 +26,27 @@ extension SwiftAppodealFlutterPlugin: AppodealBannerDelegate {
     }
 
     public func bannerDidExpired() {
+        channel?.invokeMethod("onBannerExpired", arguments: nil)
+    }
+    
+    
+    public func bannerViewDidLoadAd(_ bannerView: APDBannerView, isPrecache precache: Bool) {
+        channel?.invokeMethod("onBannerLoaded", arguments: nil)
+    }
+
+    public func bannerView(_ bannerView: APDBannerView, didFailToLoadAdWithError error: Error) {
+        channel?.invokeMethod("onBannerFailedToLoad", arguments: nil)
+    }
+
+    public func bannerViewDidInteract(_ bannerView: APDBannerView) {
+        channel?.invokeMethod("onBannerClicked", arguments: nil)
+    }
+
+    public func bannerViewDidShow(_ bannerView: APDBannerView) {
+        channel?.invokeMethod("onBannerShown", arguments: nil)
+    }
+
+    public func bannerViewExpired(_ bannerView: APDBannerView) {
         channel?.invokeMethod("onBannerExpired", arguments: nil)
     }
 }

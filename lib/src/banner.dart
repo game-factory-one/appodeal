@@ -10,22 +10,21 @@ class AppodealBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String,dynamic> args = {
+      "placementName": this.placementName
+    };
     return Container(
       width: 320,
       height: 50,
       child: Platform.isIOS
         ? UiKitView(
             viewType: 'plugins.io.vinicius.appodeal/banner',
-            creationParams: {
-              placementName: this.placementName
-            },
+            creationParams: args,
             creationParamsCodec: const StandardMessageCodec(),
           )
         : AndroidView(
             viewType: 'plugins.io.vinicius.appodeal/banner',
-            creationParams: {
-              placementName: this.placementName
-            },
+            creationParams: args,
             creationParamsCodec: const StandardMessageCodec(),
           ),
     );
